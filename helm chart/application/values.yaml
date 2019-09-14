@@ -1,0 +1,17 @@
+image:
+  repo: "10.10.10.10:5000"
+  name: "app"
+  tag: "73"
+replicas: 3
+hpa:
+  minReplicas: 3
+  maxReplicas: 5
+  cpuAvg: 85
+  memAvg: 85
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "200m"
+  limits:
+    memory: "1024Mi"
+    cpu: "400m"

@@ -1,0 +1,24 @@
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "service.name" . }}
+  label:
+    app: {{ template "service.name" . }}
+    component: "app"
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: {{ template "service.name" . }}
+  minReplicas: {{ .Values.hpa.minReplicas | default 1}}
+  maxReplicas: {{ .Values.hpa.maxReplicas | default 5}}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ .Values.hpa.cpuAvg | default 50}}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {{ .Values.hpa.memAvg | default 50}}
